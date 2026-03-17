@@ -1,7 +1,6 @@
 import { redirect } from "next/navigation";
 import { createClient } from "@/utils/supabase/server";
 import DashboardClient from "@/components/DashboardClient";
-import Footer from "@/components/Footer";
 
 type PlanType = "free" | "pro" | "investor";
 
@@ -40,8 +39,6 @@ export default async function DashboardPage() {
           currentPlan={currentPlan}
         />
       </section>
-
-      <Footer />
     </main>
   );
 }
