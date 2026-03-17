@@ -2,9 +2,9 @@ import { redirect } from "next/navigation";
 import DashboardClient from "@/components/DashboardClient";
 import { createClient } from "@/utils/supabase/server";
 
-type PlanType = "free" | "starter" | "pro";
+type PlanType = "free" | "pro" | "investor";
 
-export default async function DashboardPage() {
+export default async function Page() {
   const supabase = await createClient();
 
   const {
@@ -15,26 +15,14 @@ export default async function DashboardPage() {
     redirect("/login");
   }
 
-  let currentPlan: PlanType = "free";
-
-  const { data: subscription } = await supabase
-    .from("subscriptions")
-    .select("plan")
-    .eq("user_id", user.id)
-    .maybeSingle();
-
-  if (subscription?.plan === "starter" || subscription?.plan === "pro") {
-    currentPlan = subscription.plan;
-  }
+  const currentPlan: PlanType = "free";
 
   return (
-    <main className="min-h-screen bg-neutral-950 text-white">
+    <main className="min-h-screen bg-[#07112b] text-white">
       <section className="mx-auto w-full max-w-[1240px] px-4 py-4 md:px-6 md:py-6">
         <DashboardClient
-          initialUserEmail={user.email ?? ""}
-          initialPlanName={currentPlan}
-          initialPortfolio={[]}
-          initialWatchlist={[]}
+          userEmail={user.email ?? ""}
+          currentPlan={currentPlan}
         />
       </section>
     </main>
